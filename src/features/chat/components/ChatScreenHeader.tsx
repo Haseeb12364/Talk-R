@@ -1,15 +1,19 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Avatar } from '@/components/Avatar';
 import { colors } from '@/theme/colors';
-import { currentUser } from '@/features/chat/data/conversations';
+import type { Conversation } from '@/features/chat/types';
 
-export function ChatScreenHeader() {
+type ChatScreenHeaderProps = {
+  profile: Pick<Conversation, 'initials' | 'color' | 'online' | 'avatarUrl'>;
+  conversationCount: number;
+};
+
+export function ChatScreenHeader({ profile, conversationCount }: ChatScreenHeaderProps) {
   return (
     <>
       <View style={styles.topBar}>
         <Pressable accessibilityRole="button" accessibilityLabel="Your profile" style={styles.profileButton}>
-          <Avatar person={currentUser} size={42} />
-          <View style={styles.profilePresence} />
+          <Avatar person={profile} size={42} />
         </Pressable>
         <View style={styles.brandLockup}>
           <Text style={styles.brand}>talk<Text style={styles.brandAccent}>r</Text></Text>
@@ -25,7 +29,7 @@ export function ChatScreenHeader() {
           <Text style={styles.eyebrow}>YOUR PEOPLE, RIGHT HERE</Text>
           <Text style={styles.heading}>Messages<Text style={styles.headingPeriod}>.</Text></Text>
         </View>
-        <View style={styles.inboxCount}><Text style={styles.inboxCountText}>12</Text></View>
+        {conversationCount > 0 && <View style={styles.inboxCount}><Text style={styles.inboxCountText}>{conversationCount}</Text></View>}
       </View>
     </>
   );
@@ -34,7 +38,6 @@ export function ChatScreenHeader() {
 const styles = StyleSheet.create({
   topBar: { height: 62, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 24 },
   profileButton: { width: 46, height: 46, alignItems: 'center', justifyContent: 'center' },
-  profilePresence: { position: 'absolute', width: 12, height: 12, right: 0, bottom: 0, borderRadius: 6, backgroundColor: '#79B79C', borderWidth: 2, borderColor: colors.background },
   brandLockup: { flexDirection: 'row', alignItems: 'flex-start', gap: 4 },
   brand: { color: '#242723', fontSize: 24, letterSpacing: -1.3, fontWeight: '800' },
   brandAccent: { color: '#78AA91' },

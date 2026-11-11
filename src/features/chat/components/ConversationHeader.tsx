@@ -17,7 +17,7 @@ export function ConversationHeader({ conversation, onBack }: ConversationHeaderP
       <Avatar person={conversation} size={42} showOnline />
       <View style={styles.contactInfo}>
         <Text numberOfLines={1} style={styles.name}>{conversation.name}</Text>
-        <Text style={styles.presence}>{conversation.online ? 'Online now' : 'Tap here for contact info'}</Text>
+        <Text numberOfLines={1} style={styles.presence}>{conversation.peerEmail ?? 'Talk R user'}</Text>
       </View>
       <Pressable accessibilityRole="button" accessibilityLabel="Start a voice call" style={styles.actionButton}>
         <Text style={styles.actionIcon}>☎</Text>

@@ -22,7 +22,7 @@ export function MessageList({ messages }: MessageListProps) {
       keyboardShouldPersistTaps="handled"
       ListEmptyComponent={(
         <View style={styles.emptyState}>
-          <Text style={styles.emptyTitle}>Say hello 👋</Text>
+          <Text style={styles.emptyTitle}>Say hello</Text>
           <Text style={styles.emptyCopy}>Start the conversation with a message.</Text>
         </View>
       )}

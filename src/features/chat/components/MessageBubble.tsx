@@ -14,7 +14,6 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         <Text style={[styles.messageText, isOutgoing && styles.outgoingText]}>{message.text}</Text>
         <View style={styles.metaRow}>
           <Text style={[styles.time, isOutgoing && styles.outgoingMeta]}>{message.time}</Text>
-          {isOutgoing && <Text style={styles.readReceipt}>✓✓</Text>}
         </View>
       </View>
     </View>
@@ -33,5 +32,4 @@ const styles = StyleSheet.create({
   metaRow: { flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 5, marginTop: 5 },
   time: { color: '#A2A59D', fontSize: 9 },
   outgoingMeta: { color: '#BED1C3' },
-  readReceipt: { color: '#BFD5C5', fontSize: 9, fontWeight: '700' },
 });
