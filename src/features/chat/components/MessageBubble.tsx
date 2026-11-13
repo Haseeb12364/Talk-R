@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
+import { colors } from '@/theme/colors';
 import type { ChatMessage } from '../types';
 
 type MessageBubbleProps = {
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
   outgoingRow: { alignItems: 'flex-end' },
   incomingRow: { alignItems: 'flex-start' },
   bubble: { maxWidth: '82%', borderRadius: 19, paddingHorizontal: 15, paddingTop: 11, paddingBottom: 8 },
-  outgoingBubble: { backgroundColor: '#315B45', borderBottomRightRadius: 6 },
+  outgoingBubble: { backgroundColor: colors.primaryDark, borderBottomRightRadius: 6 },
   incomingBubble: { backgroundColor: '#FFFFFF', borderBottomLeftRadius: 6, borderWidth: 1, borderColor: '#ECEDE8' },
   messageText: { color: '#30352F', fontSize: 14, lineHeight: 20 },
   outgoingText: { color: '#FFFFFF' },

@@ -120,6 +120,6 @@ const styles = StyleSheet.create({
   notFound: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 28, backgroundColor: colors.background },
   notFoundTitle: { color: colors.text, fontSize: 19, fontWeight: '700', marginBottom: 8 },
   notFoundCopy: { color: colors.textSecondary, fontSize: 13, marginBottom: 20, textAlign: 'center' },
-  backToChatsButton: { backgroundColor: '#315B45', paddingHorizontal: 18, paddingVertical: 11, borderRadius: 13 },
+  backToChatsButton: { backgroundColor: colors.primaryDark, paddingHorizontal: 18, paddingVertical: 11, borderRadius: 13 },
   backToChatsText: { color: '#FFFFFF', fontSize: 12, fontWeight: '700' },
 });

@@ -217,7 +217,7 @@ export function SecondaryTabScreen({ tab, onOpenConversation }: SecondaryTabScre
               style={styles.searchInput}
               value={query}
             />
-            {loading && <ActivityIndicator size="small" color="#547561" />}
+            {loading && <ActivityIndicator size="small" color={colors.primary} />}
           </View>
           {error ? <Text style={styles.error}>{error}</Text> : null}
           {query.trim().length < 2 ? (
@@ -232,7 +232,7 @@ export function SecondaryTabScreen({ tab, onOpenConversation }: SecondaryTabScre
                 <Text style={styles.personStatus}>{person.email}</Text>
               </View>
               {openingUserId === person.userId
-                ? <ActivityIndicator size="small" color="#547561" />
+                ? <ActivityIndicator size="small" color={colors.primary} />
                 : <Text style={styles.chevron}>›</Text>}
             </Pressable>
           ))}
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
   heading: { paddingHorizontal: 26, paddingTop: 24, paddingBottom: 25 },
   eyebrow: { color: '#999B94', fontSize: 9, fontWeight: '700', letterSpacing: 2.1, marginBottom: 8 },
   title: { color: colors.text, fontSize: 38, fontWeight: '700', letterSpacing: -1.5, lineHeight: 43 },
-  period: { color: '#8BAE98' },
+  period: { color: colors.primary },
   subtitle: { color: colors.textSecondary, fontSize: 13, marginTop: 8 },
   peopleSection: { paddingHorizontal: 22 },
   sectionTitle: { color: colors.text, fontSize: 16, fontWeight: '700', marginBottom: 12 },
@@ -282,15 +282,15 @@ const styles = StyleSheet.create({
   workspaceCard: { marginBottom: 10, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 16, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border },
   workspaceMain: { minHeight: 52, flexDirection: 'row', alignItems: 'center', gap: 10 },
   workspaceIcon: { width: 40, height: 40, borderRadius: 14, backgroundColor: colors.primarySoft, alignItems: 'center', justifyContent: 'center' },
-  workspaceIconText: { color: '#547561', fontWeight: '700', fontSize: 15 },
+  workspaceIconText: { color: colors.primaryDark, fontWeight: '700', fontSize: 15 },
   inviteLink: { alignSelf: 'flex-start', paddingVertical: 7, paddingLeft: 50 },
-  inviteLinkText: { color: '#547561', fontSize: 11, fontWeight: '600' },
+  inviteLinkText: { color: colors.primary, fontSize: 11, fontWeight: '600' },
   inviteForm: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 4 },
   invitesTitle: { marginTop: 18 },
   inviteCard: { minHeight: 64, flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 12, marginBottom: 8, borderRadius: 16, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border },
   acceptButton: { minHeight: 36, paddingHorizontal: 14, borderRadius: 12, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.primarySoft },
-  acceptText: { color: '#547561', fontSize: 11, fontWeight: '700' },
-  feedback: { color: '#547561', fontSize: 11, lineHeight: 16, paddingVertical: 7 },
+  acceptText: { color: colors.primaryDark, fontSize: 11, fontWeight: '700' },
+  feedback: { color: colors.primaryDark, fontSize: 11, lineHeight: 16, paddingVertical: 7 },
   findPeopleTitle: { marginTop: 20 },
   searchBox: { minHeight: 50, marginBottom: 12, paddingHorizontal: 15, borderRadius: 16, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.surface, flexDirection: 'row', alignItems: 'center' },
   searchInput: { flex: 1, color: colors.text, fontSize: 13, paddingVertical: 12 },

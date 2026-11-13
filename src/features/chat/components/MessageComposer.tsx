@@ -48,12 +48,12 @@ export function MessageComposer({ value, onChangeText, onSend }: MessageComposer
 const styles = StyleSheet.create({
   container: { minHeight: 72, backgroundColor: colors.surface, borderTopWidth: 1, borderTopColor: colors.border, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, paddingVertical: 10, gap: 9 },
   attachButton: { width: 32, height: 42, alignItems: 'center', justifyContent: 'center' },
-  attachIcon: { color: '#6B8171', fontSize: 25, fontWeight: '300' },
+  attachIcon: { color: colors.primaryDark, fontSize: 25, fontWeight: '300' },
   inputWrap: { minHeight: 44, maxHeight: 110, flex: 1, borderRadius: 22, backgroundColor: '#F5F6F2', borderWidth: 1, borderColor: '#ECEDE8', flexDirection: 'row', alignItems: 'center', paddingLeft: 15, paddingRight: 5 },
   input: { flex: 1, maxHeight: 92, color: '#30352F', fontSize: 13, paddingVertical: 10, outlineStyle: 'none' } as any,
   emojiButton: { width: 34, height: 38, alignItems: 'center', justifyContent: 'center' },
-  emoji: { color: '#829486', fontSize: 19 },
-  sendButton: { width: 42, height: 42, borderRadius: 15, alignItems: 'center', justifyContent: 'center', backgroundColor: '#315B45' },
+  emoji: { color: colors.primary, fontSize: 19 },
+  sendButton: { width: 42, height: 42, borderRadius: 15, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.primary },
   sendButtonDisabled: { backgroundColor: '#E8ECE7' },
   sendIcon: { color: '#FFFFFF', fontSize: 23, lineHeight: 27, fontWeight: '600' },
 });

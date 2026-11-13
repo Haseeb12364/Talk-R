@@ -32,12 +32,12 @@ export function ConversationHeader({ conversation, onBack }: ConversationHeaderP
 const styles = StyleSheet.create({
   header: { minHeight: 70, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, gap: 10, backgroundColor: colors.surface, borderBottomWidth: 1, borderBottomColor: colors.border },
   backButton: { width: 30, height: 42, alignItems: 'center', justifyContent: 'center' },
-  backIcon: { color: '#4E6957', fontSize: 37, fontWeight: '300', lineHeight: 40, marginTop: -3 },
+  backIcon: { color: colors.primaryDark, fontSize: 37, fontWeight: '300', lineHeight: 40, marginTop: -3 },
   contactInfo: { flex: 1, justifyContent: 'center', marginLeft: 1 },
   name: { color: colors.text, fontSize: 14, fontWeight: '700', marginBottom: 4 },
   presence: { color: '#8A9B8C', fontSize: 10 },
   actionButton: { width: 35, height: 38, alignItems: 'center', justifyContent: 'center' },
-  actionIcon: { color: '#587561', fontSize: 18 },
+  actionIcon: { color: colors.primary, fontSize: 18 },
   moreButton: { width: 32, height: 38, alignItems: 'center', justifyContent: 'center' },
   moreIcon: { color: '#758078', fontSize: 19, fontWeight: '700', letterSpacing: 1 },
 });

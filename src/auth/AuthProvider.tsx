@@ -16,6 +16,19 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+const oauthCodeExchanges = new Map<string, Promise<void>>();
+
+export function exchangeOAuthCode(code: string) {
+  const existingExchange = oauthCodeExchanges.get(code);
+  if (existingExchange) return existingExchange;
+
+  const exchange = requireSupabase().auth.exchangeCodeForSession(code).then(({ error }) => {
+    if (error) throw error;
+  });
+  oauthCodeExchanges.set(code, exchange);
+  return exchange;
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(isSupabaseConfigured);
@@ -51,7 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signInWithGoogle = useCallback(async () => {
     const client = requireSupabase();
-    const redirectTo = makeRedirectUri({ scheme: 'talkr', path: 'auth/callback' });
+    const redirectTo = makeRedirectUri({ scheme: 'talkr', path: 'auth/callback', isTripleSlashed: true });
     const { data, error } = await client.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -74,8 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const code = callbackUrl.searchParams.get('code');
     if (!code) throw new Error('Google sign-in returned no authorization code. Check the redirect URL settings.');
 
-    const { error: exchangeError } = await client.auth.exchangeCodeForSession(code);
-    if (exchangeError) throw exchangeError;
+    await exchangeOAuthCode(code);
   }, []);
 
   const signOut = useCallback(async () => {

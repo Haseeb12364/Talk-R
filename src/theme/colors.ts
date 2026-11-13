@@ -5,8 +5,8 @@ export const colors = {
   textSecondary: '#73766F',
   textMuted: '#A3A59E',
   border: '#EDEEE9',
-  primary: '#7DA88D',
-  primaryDark: '#26342D',
-  primarySoft: '#E7EEE8',
-  coral: '#E6A38D',
+  primary: '#E21E27',
+  primaryDark: '#301249',
+  primarySoft: '#FBE9EA',
+  coral: '#E21E27',
 };

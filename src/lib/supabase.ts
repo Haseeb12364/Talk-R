@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
+import * as ExpoCrypto from 'expo-crypto';
 import * as SecureStore from 'expo-secure-store';
 import { createClient } from '@supabase/supabase-js';
 import 'react-native-url-polyfill/auto';
@@ -8,6 +9,24 @@ const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseKey);
+
+if (Platform.OS !== 'web' && !globalThis.crypto?.subtle) {
+  const currentCrypto = globalThis.crypto;
+  const subtle = {
+    digest: (algorithm: AlgorithmIdentifier, data: BufferSource) => {
+      const name = typeof algorithm === 'string' ? algorithm : algorithm.name;
+      return ExpoCrypto.digest(name as ExpoCrypto.CryptoDigestAlgorithm, data);
+    },
+  };
+
+  Object.defineProperty(globalThis, 'crypto', {
+    configurable: true,
+    value: {
+      getRandomValues: currentCrypto?.getRandomValues?.bind(currentCrypto) ?? ExpoCrypto.getRandomValues,
+      subtle,
+    },
+  });
+}
 
 const secureStorage = {
   getItem: (key: string) => SecureStore.getItemAsync(key),
