@@ -1,6 +1,7 @@
 import type { RealtimeChannel } from '@supabase/supabase-js';
 import type { ChatMessage, ChatUser, Conversation, Workspace, WorkspaceInvite, WorkspaceMember } from '@/features/chat/types';
 import { requireSupabase } from '@/lib/supabase';
+import { colors } from '@/utils/theme';
 
 type ConversationRow = {
   id: string;
@@ -44,7 +45,7 @@ export async function listConversations(): Promise<Conversation[]> {
       id: row.id,
       name,
       initials: initials(name),
-      color: '#9DB8A4',
+      color: colors.avatarSage,
       message: row.last_message || 'Start a conversation',
       time: formatTime(row.last_message_at),
       peerId: row.peer_id ?? undefined,
@@ -192,4 +193,3 @@ export function subscribeToConversationList(onChange: () => void): RealtimeChann
 export function parseRealtimeMessage(row: MessageRow, currentUserId: string) {
   return mapMessage(row, currentUserId);
 }
-

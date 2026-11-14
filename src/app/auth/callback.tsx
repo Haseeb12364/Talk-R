@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { exchangeOAuthCode } from '@/auth/AuthProvider';
-import { colors } from '@/theme/colors';
+import { colors } from '@/utils/theme';
 
 type CallbackParams = {
   code?: string | string[];

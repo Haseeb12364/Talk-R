@@ -8,7 +8,7 @@ import { listConversations, listMessages, parseRealtimeMessage, sendMessage, sub
 import type { ChatMessage, Conversation } from '@/features/chat/types';
 import { useAuth } from '@/auth/AuthProvider';
 import { requireSupabase } from '@/lib/supabase';
-import { colors } from '@/theme/colors';
+import { colors } from '@/utils/theme';
 
 type ConversationScreenProps = {
   conversationId: string;
@@ -116,10 +116,10 @@ const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.background },
   composerDock: { backgroundColor: colors.surface },
-  error: { backgroundColor: '#FCECEA', color: '#9D3F39', paddingHorizontal: 16, paddingVertical: 9, fontSize: 12 },
+  error: { backgroundColor: colors.errorSurface, color: colors.errorDark, paddingHorizontal: 16, paddingVertical: 9, fontSize: 12 },
   notFound: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 28, backgroundColor: colors.background },
   notFoundTitle: { color: colors.text, fontSize: 19, fontWeight: '700', marginBottom: 8 },
   notFoundCopy: { color: colors.textSecondary, fontSize: 13, marginBottom: 20, textAlign: 'center' },
   backToChatsButton: { backgroundColor: colors.primaryDark, paddingHorizontal: 18, paddingVertical: 11, borderRadius: 13 },
-  backToChatsText: { color: '#FFFFFF', fontSize: 12, fontWeight: '700' },
+  backToChatsText: { color: colors.white, fontSize: 12, fontWeight: '700' },
 });

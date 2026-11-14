@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { colors } from '@/theme/colors';
+import { colors } from '@/utils/theme';
 import type { ChatMessage } from '../types';
 import { MessageBubble } from './MessageBubble';
 

@@ -10,7 +10,7 @@ import { listConversations, subscribeToConversationList } from '@/features/chat/
 import type { Conversation } from '@/features/chat/types';
 import { useAuth } from '@/auth/AuthProvider';
 import { requireSupabase } from '@/lib/supabase';
-import { colors } from '@/theme/colors';
+import { colors } from '@/utils/theme';
 import { SecondaryTabScreen } from './SecondaryTabScreen';
 
 function getInitials(name: string) {
@@ -57,7 +57,7 @@ export function ChatScreen() {
   const avatarUrl = typeof user?.user_metadata.avatar_url === 'string'
     ? user.user_metadata.avatar_url
     : typeof user?.user_metadata.picture === 'string' ? user.user_metadata.picture : null;
-  const profile = { initials: getInitials(displayName), color: '#DEA99A', online: false, avatarUrl };
+  const profile = { initials: getInitials(displayName), color: colors.avatarRose, online: false, avatarUrl };
 
   const openConversation = (conversationId: string) => router.push({
     pathname: '/conversation/[id]',
@@ -93,5 +93,5 @@ const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
   scrollContent: { paddingBottom: 16 },
   loading: { marginTop: 28 },
-  error: { marginHorizontal: 26, marginTop: 20, color: '#B64F47', fontSize: 12, lineHeight: 18 },
+  error: { marginHorizontal: 26, marginTop: 20, color: colors.error, fontSize: 12, lineHeight: 18 },
 });

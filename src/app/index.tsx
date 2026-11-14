@@ -2,7 +2,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { ChatScreen } from '@/screens/chat/ChatScreen';
 import { LoginScreen } from '@/screens/auth/LoginScreen';
 import { useAuth } from '@/auth/AuthProvider';
-import { colors } from '@/theme/colors';
+import { colors } from '@/utils/theme';
 
 export default function HomeRoute() {
   const { user, loading } = useAuth();

@@ -3,7 +3,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useAuth } from '@/auth/AuthProvider';
 import { ConversationScreen } from '@/screens/chat/ConversationScreen';
-import { colors } from '@/theme/colors';
+import { colors } from '@/utils/theme';
 
 export default function ConversationRoute() {
   const { id } = useLocalSearchParams<{ id: string }>();

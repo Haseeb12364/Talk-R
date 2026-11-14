@@ -5,7 +5,7 @@ import type { TabName } from '@/components/BottomTabBar';
 import { acceptWorkspaceInvite, createWorkspace, listWorkspaceInvites, listWorkspaces, openDirectConversation, searchUsers, sendWorkspaceInvite } from '@/features/chat/data/api';
 import type { ChatUser, Workspace, WorkspaceInvite } from '@/features/chat/types';
 import { useAuth } from '@/auth/AuthProvider';
-import { colors } from '@/theme/colors';
+import { colors } from '@/utils/theme';
 
 type SecondaryTabScreenProps = {
   tab: Exclude<TabName, 'Chats'>;
@@ -159,7 +159,7 @@ export function SecondaryTabScreen({ tab, onOpenConversation }: SecondaryTabScre
               maxLength={60}
               onChangeText={setNewWorkspaceName}
               placeholder="New workspace name"
-              placeholderTextColor="#9A9A96"
+              placeholderTextColor={colors.placeholder}
               style={styles.workspaceInput}
               value={newWorkspaceName}
             />
@@ -182,7 +182,7 @@ export function SecondaryTabScreen({ tab, onOpenConversation }: SecondaryTabScre
               </Pressable>
               {invitingWorkspaceId === workspace.id && (
                 <View style={styles.inviteForm}>
-                  <TextInput autoCapitalize="none" autoCorrect={false} keyboardType="email-address" onChangeText={setInviteEmail} placeholder="name@gmail.com" placeholderTextColor="#9A9A96" style={styles.workspaceInput} value={inviteEmail} />
+                  <TextInput autoCapitalize="none" autoCorrect={false} keyboardType="email-address" onChangeText={setInviteEmail} placeholder="name@gmail.com" placeholderTextColor={colors.placeholder} style={styles.workspaceInput} value={inviteEmail} />
                   <Pressable disabled={workspaceBusy || !inviteEmail.trim()} onPress={() => { void handleSendWorkspaceInvite(); }} style={[styles.createButton, (workspaceBusy || !inviteEmail.trim()) && styles.disabled]}>
                     <Text style={styles.createButtonText}>{workspaceBusy ? '…' : 'Send'}</Text>
                   </Pressable>
@@ -213,7 +213,7 @@ export function SecondaryTabScreen({ tab, onOpenConversation }: SecondaryTabScre
               keyboardType="email-address"
               onChangeText={handleSearchChange}
               placeholder="Name or Gmail address"
-              placeholderTextColor="#9A9A96"
+              placeholderTextColor={colors.placeholder}
               style={styles.searchInput}
               value={query}
             />
@@ -226,7 +226,7 @@ export function SecondaryTabScreen({ tab, onOpenConversation }: SecondaryTabScre
             <Text style={styles.hint}>No Talk R users found. Ask them to sign in first.</Text>
           ) : users.map((person) => (
             <Pressable key={person.userId} onPress={() => handleOpenUser(person)} style={styles.personRow}>
-              <Avatar person={{ initials: getInitials(person.displayName), color: '#9DB8A4', avatarUrl: person.avatarUrl, online: false }} size={48} />
+              <Avatar person={{ initials: getInitials(person.displayName), color: colors.avatarSage, avatarUrl: person.avatarUrl, online: false }} size={48} />
               <View style={styles.personInfo}>
                 <Text style={styles.personName}>{person.displayName}</Text>
                 <Text style={styles.personStatus}>{person.email}</Text>
@@ -249,7 +249,7 @@ export function SecondaryTabScreen({ tab, onOpenConversation }: SecondaryTabScre
       {tab === 'Settings' && (
         <View style={styles.settingsCard}>
           <View style={styles.profileRow}>
-            <Avatar person={{ initials: getInitials(displayName), color: '#DEA99A', avatarUrl, online: false }} size={52} />
+            <Avatar person={{ initials: getInitials(displayName), color: colors.avatarRose, avatarUrl, online: false }} size={52} />
             <View style={styles.personInfo}>
               <Text style={styles.personName}>{displayName}</Text>
               <Text style={styles.personStatus}>{user?.email}</Text>
@@ -268,7 +268,7 @@ export function SecondaryTabScreen({ tab, onOpenConversation }: SecondaryTabScre
 const styles = StyleSheet.create({
   content: { flexGrow: 1, paddingBottom: 24 },
   heading: { paddingHorizontal: 26, paddingTop: 24, paddingBottom: 25 },
-  eyebrow: { color: '#999B94', fontSize: 9, fontWeight: '700', letterSpacing: 2.1, marginBottom: 8 },
+  eyebrow: { color: colors.eyebrow, fontSize: 9, fontWeight: '700', letterSpacing: 2.1, marginBottom: 8 },
   title: { color: colors.text, fontSize: 38, fontWeight: '700', letterSpacing: -1.5, lineHeight: 43 },
   period: { color: colors.primary },
   subtitle: { color: colors.textSecondary, fontSize: 13, marginTop: 8 },
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
   createWorkspaceRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 12 },
   workspaceInput: { flex: 1, minHeight: 46, paddingHorizontal: 13, borderRadius: 14, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.surface, color: colors.text, fontSize: 12 },
   createButton: { minHeight: 42, minWidth: 68, paddingHorizontal: 12, borderRadius: 13, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.primaryDark },
-  createButtonText: { color: '#FFFFFF', fontSize: 11, fontWeight: '700' },
+  createButtonText: { color: colors.white, fontSize: 11, fontWeight: '700' },
   disabled: { opacity: 0.5 },
   workspaceCard: { marginBottom: 10, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 16, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border },
   workspaceMain: { minHeight: 52, flexDirection: 'row', alignItems: 'center', gap: 10 },
@@ -295,17 +295,17 @@ const styles = StyleSheet.create({
   searchBox: { minHeight: 50, marginBottom: 12, paddingHorizontal: 15, borderRadius: 16, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.surface, flexDirection: 'row', alignItems: 'center' },
   searchInput: { flex: 1, color: colors.text, fontSize: 13, paddingVertical: 12 },
   hint: { color: colors.textSecondary, fontSize: 12, lineHeight: 18, paddingHorizontal: 4, paddingVertical: 12 },
-  error: { color: '#B64F47', fontSize: 12, lineHeight: 18, paddingVertical: 8 },
+  error: { color: colors.error, fontSize: 12, lineHeight: 18, paddingVertical: 8 },
   personRow: { minHeight: 70, flexDirection: 'row', alignItems: 'center', gap: 12, borderBottomWidth: 1, borderBottomColor: colors.border },
   personInfo: { flex: 1 },
   personName: { color: colors.text, fontSize: 14, fontWeight: '600' },
   personStatus: { color: colors.textSecondary, fontSize: 11, marginTop: 4 },
-  chevron: { color: '#A1A69E', fontSize: 25, paddingHorizontal: 8 },
+  chevron: { color: colors.chevron, fontSize: 25, paddingHorizontal: 8 },
   emptyCard: { marginHorizontal: 22, marginTop: 16, padding: 28, alignItems: 'center', backgroundColor: colors.surface, borderRadius: 22, borderWidth: 1, borderColor: colors.border },
   emptyTitle: { color: colors.text, fontSize: 16, fontWeight: '700', marginBottom: 8 },
   emptyCopy: { maxWidth: 245, color: colors.textSecondary, fontSize: 12, lineHeight: 18, textAlign: 'center' },
   settingsCard: { marginHorizontal: 22, padding: 16, backgroundColor: colors.surface, borderRadius: 22, borderWidth: 1, borderColor: colors.border },
   profileRow: { minHeight: 70, flexDirection: 'row', alignItems: 'center', gap: 12 },
   signOutButton: { minHeight: 46, justifyContent: 'center', borderTopWidth: 1, borderTopColor: colors.border, marginTop: 12 },
-  signOutText: { color: '#A24F48', fontSize: 13, fontWeight: '600' },
+  signOutText: { color: colors.errorSignOut, fontSize: 13, fontWeight: '600' },
 });

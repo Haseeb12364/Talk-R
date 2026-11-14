@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Avatar } from '@/components/Avatar';
-import { colors } from '@/theme/colors';
+import { colors } from '@/utils/theme';
 import type { Conversation } from '../types';
 
 type ChatRowProps = {
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   pressed: { opacity: 0.7 },
   copy: { flex: 1, height: '100%', marginLeft: 14, justifyContent: 'center', borderBottomWidth: 1, borderBottomColor: colors.border },
   titleLine: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 },
-  name: { flex: 1, color: '#363A34', fontSize: 14, fontWeight: '600', letterSpacing: -0.15 },
+  name: { flex: 1, color: colors.textName, fontSize: 14, fontWeight: '600', letterSpacing: -0.15 },
   time: { color: colors.textMuted, fontSize: 10, marginLeft: 8 },
-  preview: { color: '#91938D', fontSize: 11.5, letterSpacing: 0.05 },
+  preview: { color: colors.textPreview, fontSize: 11.5, letterSpacing: 0.05 },
 });

@@ -1,5 +1,6 @@
 import { useAuth } from '@/auth/AuthProvider';
 import { isSupabaseConfigured } from '@/lib/supabase';
+import { colors } from '@/utils/theme';
 import { MaterialIcons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useRef, useState } from 'react';
@@ -15,22 +16,22 @@ import {
   View,
 } from 'react-native';
 
-// Brand palette. Consider moving these into '@/theme/colors' so the whole app shares them.
+// Login screen brand treatments use the shared app palette.
 const brand = {
-  red: '#E21E27',
-  redSoft: 'rgba(226, 30, 39, 0.16)',
-  redBorder: 'rgba(226, 30, 39, 0.45)',
-  redLight: '#FF8D93',
-  purple: '#301249',
-  purpleDeep: '#220C35',
-  purpleLight: '#4A2270',
-  white: '#FFFFFF',
-  textMuted: 'rgba(255, 255, 255, 0.72)',
-  textFaint: 'rgba(255, 255, 255, 0.5)',
-  glass: 'rgba(255, 255, 255, 0.08)',
-  glassBorder: 'rgba(255, 255, 255, 0.16)',
-  errorBg: 'rgba(226, 30, 39, 0.18)',
-  errorText: '#FFB4B8',
+  red: colors.primary,
+  redSoft: colors.redGlass,
+  redBorder: colors.redGlassBorder,
+  redLight: colors.primaryLightText,
+  purple: colors.primaryDark,
+  purpleDeep: colors.primaryDeep,
+  purpleLight: colors.primaryLight,
+  white: colors.white,
+  textMuted: colors.textOnBrand,
+  textFaint: colors.textFaint,
+  glass: colors.glass,
+  glassBorder: colors.glassBorder,
+  errorBg: colors.errorGlass,
+  errorText: colors.redLight,
 };
 
 /* ---------- Small animation helpers (built-in Animated API, no extra packages) ---------- */
@@ -344,11 +345,11 @@ const styles = StyleSheet.create({
   googleButton: {
     width: '100%', minHeight: 58, borderRadius: 19, backgroundColor: brand.white, paddingHorizontal: 18,
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 12,
-    shadowColor: '#000', shadowOpacity: 0.3, shadowRadius: 16, shadowOffset: { width: 0, height: 10 }, elevation: 8,
+    shadowColor: colors.black, shadowOpacity: 0.3, shadowRadius: 16, shadowOffset: { width: 0, height: 10 }, elevation: 8,
   },
   disabled: { opacity: 0.7 },
-  googleBadge: { width: 28, height: 28, borderRadius: 14, backgroundColor: '#F4F1F7', alignItems: 'center', justifyContent: 'center' },
-  googleG: { color: '#4285F4', fontSize: 17, fontWeight: '800' },
+  googleBadge: { width: 28, height: 28, borderRadius: 14, backgroundColor: colors.googleSurface, alignItems: 'center', justifyContent: 'center' },
+  googleG: { color: colors.googleBlue, fontSize: 17, fontWeight: '800' },
   googleLabel: { color: brand.purple, fontSize: 15, fontWeight: '700' },
 
   error: {

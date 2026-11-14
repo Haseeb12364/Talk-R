@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Avatar } from '@/components/Avatar';
-import { colors } from '@/theme/colors';
+import { colors } from '@/utils/theme';
 import type { Conversation } from '../types';
 
 type ConversationHeaderProps = {
@@ -35,9 +35,9 @@ const styles = StyleSheet.create({
   backIcon: { color: colors.primaryDark, fontSize: 37, fontWeight: '300', lineHeight: 40, marginTop: -3 },
   contactInfo: { flex: 1, justifyContent: 'center', marginLeft: 1 },
   name: { color: colors.text, fontSize: 14, fontWeight: '700', marginBottom: 4 },
-  presence: { color: '#8A9B8C', fontSize: 10 },
+  presence: { color: colors.presence, fontSize: 10 },
   actionButton: { width: 35, height: 38, alignItems: 'center', justifyContent: 'center' },
   actionIcon: { color: colors.primary, fontSize: 18 },
   moreButton: { width: 32, height: 38, alignItems: 'center', justifyContent: 'center' },
-  moreIcon: { color: '#758078', fontSize: 19, fontWeight: '700', letterSpacing: 1 },
+  moreIcon: { color: colors.iconMuted, fontSize: 19, fontWeight: '700', letterSpacing: 1 },
 });

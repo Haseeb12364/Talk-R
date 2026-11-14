@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import type { Conversation } from '@/features/chat/types';
+import { colors } from '@/utils/theme';
 import { ChatRow } from './ChatRow';
 
 type ChatListProps = {
@@ -29,9 +30,9 @@ export function ChatList({ conversations, onOpenConversation }: ChatListProps) {
 
 const styles = StyleSheet.create({
   sectionHeading: { paddingHorizontal: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 },
-  sectionTitle: { color: '#282B26', fontSize: 17, fontWeight: '700', letterSpacing: -0.3 },
+  sectionTitle: { color: colors.textSection, fontSize: 17, fontWeight: '700', letterSpacing: -0.3 },
   list: { paddingHorizontal: 22 },
   emptyState: { alignItems: 'center', paddingVertical: 36 },
-  emptyTitle: { color: '#3B4039', fontSize: 14, fontWeight: '700', marginBottom: 6 },
-  emptyCopy: { color: '#8D9089', fontSize: 11, textAlign: 'center', lineHeight: 17, maxWidth: 270 },
+  emptyTitle: { color: colors.textTitle, fontSize: 14, fontWeight: '700', marginBottom: 6 },
+  emptyCopy: { color: colors.textCopy, fontSize: 11, textAlign: 'center', lineHeight: 17, maxWidth: 270 },
 });

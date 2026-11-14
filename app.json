@@ -4,16 +4,16 @@
     "slug": "talk-r",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/talk-r-launcher-icon.png",
+    "icon": "./assets/images/talk-r-full-icon.png",
     "scheme": "talkr",
     "userInterfaceStyle": "light",
     "ios": {
-      "icon": "./assets/images/talk-r-launcher-icon.png"
+      "icon": "./assets/images/talk-r-full-icon.png"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#301249",
-        "foregroundImage": "./assets/images/talk-r-adaptive-foreground.png",
+        "foregroundImage": "./assets/images/talk-r-full-adaptive-foreground.png",
         "monochromeImage": "./assets/images/talk-r-adaptive-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
@@ -21,16 +21,16 @@
     },
     "web": {
       "output": "server",
-      "favicon": "./assets/images/talk-r-app-icon.png"
+      "favicon": "./assets/images/talk-r-full-icon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#F8F8F5",
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 76
+          "backgroundColor": "#301249",
+          "image": "./assets/images/talk-r-splash-logo.png",
+          "imageWidth": 300
         }
       ],
       "expo-secure-store",

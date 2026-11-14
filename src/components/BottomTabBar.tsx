@@ -1,4 +1,4 @@
-import { colors } from '@/theme/colors';
+import { colors } from '@/utils/theme';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
@@ -31,7 +31,7 @@ export function BottomTabBar({ activeTab, onTabChange, bottomInset }: BottomTabB
             style={styles.item}
           >
             <View style={styles.iconWrap}>
-              <MaterialIcons name={tab.icon} size={21} color={selected ? colors.primary : '#A9AAA4'} />
+              <MaterialIcons name={tab.icon} size={21} color={selected ? colors.primary : colors.tabInactive} />
               {tab.label === 'Chats' && <View style={styles.notificationDot} />}
             </View>
             <Text style={[styles.label, selected && styles.labelActive]}>{tab.label}</Text>
@@ -43,10 +43,10 @@ export function BottomTabBar({ activeTab, onTabChange, bottomInset }: BottomTabB
 }
 
 const styles = StyleSheet.create({
-  bar: { backgroundColor: colors.surface, borderTopWidth: 1, borderTopColor: '#EFEFEB', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingHorizontal: 14 },
+  bar: { backgroundColor: colors.surface, borderTopWidth: 1, borderTopColor: colors.tabBorder, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingHorizontal: 14 },
   item: { width: 68, alignItems: 'center', justifyContent: 'center', gap: 4 },
   iconWrap: { height: 25, minWidth: 26, alignItems: 'center', justifyContent: 'center' },
   notificationDot: { position: 'absolute', top: 1, right: 0, width: 6, height: 6, borderRadius: 3, backgroundColor: colors.coral },
-  label: { color: '#A6A8A1', fontSize: 9, fontWeight: '500' },
+  label: { color: colors.tabLabel, fontSize: 9, fontWeight: '500' },
   labelActive: { color: colors.primaryDark, fontWeight: '700' },
 });
