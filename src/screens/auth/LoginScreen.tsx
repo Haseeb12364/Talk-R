@@ -8,12 +8,11 @@ import {
   ActivityIndicator,
   Animated,
   Easing,
-  Image,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native';
 
 // Login screen brand treatments use the shared app palette.
@@ -198,7 +197,6 @@ export function LoginScreen() {
       <View pointerEvents="none" style={styles.ringSmall} />
 
       <Animated.View style={[styles.brandRow, brandIn]}>
-        <Image accessibilityLabel="Talk R logo" source={require('../../../assets/images/talk-r-app-icon.png')} style={styles.logo} />
         <Text style={styles.brand}>talk<Text style={styles.brandAccent}>r</Text></Text>
         <View style={styles.brandDot} />
       </Animated.View>

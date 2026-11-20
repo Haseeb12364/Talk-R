@@ -26,10 +26,9 @@ export default function AuthCallbackRoute() {
 
     if (providerError || !authorizationCode) {
       if (providerError) {
-        console.error('[Google OAuth callback] Provider returned an error', {
+        console.warn('[Google OAuth callback] Provider returned an error', {
           error: providerError,
           errorCode: firstParam(error_code),
-          errorDescription: firstParam(error_description),
         });
       }
       return () => { active = false; };
@@ -54,8 +53,13 @@ export default function AuthCallbackRoute() {
   }, [code, error, error_code, error_description]);
 
   const failed = Boolean(firstParam(error) || !firstParam(code) || exchangeFailed);
-  const message = firstParam(error)
-    ? 'Google sign-in could not be completed. Check the Google provider credentials in your Supabase dashboard, then try again.'
+  const providerError = firstParam(error);
+  const providerErrorDescription = firstParam(error_description);
+  const providerMessage = providerErrorDescription?.startsWith('Unable to exchange external code:')
+    ? 'Supabase could not redeem Google’s authorization code. Check that the Google Web OAuth client ID and secret in Supabase belong to the same client, and that Google’s authorized redirect URI matches the Supabase callback URL. Check Supabase Auth logs for the provider’s detailed error.'
+    : providerErrorDescription;
+  const message = providerError
+    ? providerMessage || 'Google sign-in was rejected. Check the Google OAuth provider and redirect URL settings, then try again.'
     : !firstParam(code)
       ? 'No sign-in code was returned. Please try again.'
       : exchangeFailed

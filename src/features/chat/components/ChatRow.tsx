@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { Avatar } from '@/components/Avatar';
+import { Avatar } from '@/components/ui/Avatar';
 import { colors } from '@/utils/theme';
 import type { Conversation } from '../types';
 
