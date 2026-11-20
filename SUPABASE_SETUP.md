@@ -23,7 +23,9 @@ npx supabase link --project-ref <your-project-ref>
 npx supabase functions deploy invite-workspace-member
 ```
 
-The invite email tells the recipient to sign in to Talk R with the invited Google account and accept under **People → Invitations**. Invitations expire after seven days.
+The invite email tells the recipient to sign in to Talk R with the invited Google account and accept under **People → Invitations**. The person appears in the workspace member list after accepting. Invitations expire after seven days.
+
+The schema uses `SECURITY DEFINER` database functions for workspace operations. If workspace creation fails with a database permission error, re-run the current `supabase/schema.sql` in the Supabase SQL Editor so the function/table grants are applied.
 
 ## 3. Configure Google sign-in
 

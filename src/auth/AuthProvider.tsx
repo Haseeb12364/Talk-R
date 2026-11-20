@@ -1,8 +1,8 @@
-import * as WebBrowser from 'expo-web-browser';
-import { makeRedirectUri } from 'expo-auth-session';
-import type { Session, User } from '@supabase/supabase-js';
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { isSupabaseConfigured, requireSupabase } from '@/lib/supabase';
+import type { Session, User } from '@supabase/supabase-js';
+import { makeRedirectUri } from 'expo-auth-session';
+import * as WebBrowser from 'expo-web-browser';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -18,13 +18,21 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 const oauthCodeExchanges = new Map<string, Promise<void>>();
 
+
 export function exchangeOAuthCode(code: string) {
   const existingExchange = oauthCodeExchanges.get(code);
   if (existingExchange) return existingExchange;
 
-  const exchange = requireSupabase().auth.exchangeCodeForSession(code).then(({ error }) => {
-    if (error) throw error;
-  });
+  const exchange = requireSupabase()
+    .auth.exchangeCodeForSession(code)
+    .then(({ error }) => {
+      if (error) throw error;
+    })
+    .catch((e) => {
+      oauthCodeExchanges.delete(code);
+      throw e;
+    });
+
   oauthCodeExchanges.set(code, exchange);
   return exchange;
 }
@@ -64,6 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signInWithGoogle = useCallback(async () => {
     const client = requireSupabase();
+
     const redirectTo = makeRedirectUri({ scheme: 'talkr', path: 'auth/callback', isTripleSlashed: true });
     const { data, error } = await client.auth.signInWithOAuth({
       provider: 'google',

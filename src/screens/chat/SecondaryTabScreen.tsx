@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Avatar } from '@/components/Avatar';
-import type { TabName } from '@/components/BottomTabBar';
-import { acceptWorkspaceInvite, createWorkspace, listWorkspaceInvites, listWorkspaces, openDirectConversation, searchUsers, sendWorkspaceInvite } from '@/features/chat/data/api';
-import type { ChatUser, Workspace, WorkspaceInvite } from '@/features/chat/types';
+import { Avatar } from '@/components/ui/Avatar';
+import type { TabName } from '@/components/ui/BottomTabBar';
+import { acceptWorkspaceInvite, createWorkspace, listWorkspaceInvites, listWorkspaceMembers, listWorkspaces, openDirectConversation, searchUsers, sendWorkspaceInvite } from '@/features/chat/data/api';
+import type { ChatUser, Workspace, WorkspaceInvite, WorkspaceMember } from '@/features/chat/types';
 import { useAuth } from '@/auth/AuthProvider';
 import { colors } from '@/utils/theme';
 
@@ -25,6 +25,7 @@ export function SecondaryTabScreen({ tab, onOpenConversation }: SecondaryTabScre
   const [error, setError] = useState('');
   const [signOutError, setSignOutError] = useState('');
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
+  const [membersByWorkspace, setMembersByWorkspace] = useState<Record<string, WorkspaceMember[]>>({});
   const [invites, setInvites] = useState<WorkspaceInvite[]>([]);
   const [newWorkspaceName, setNewWorkspaceName] = useState('');
   const [inviteEmail, setInviteEmail] = useState('');
@@ -37,10 +38,12 @@ export function SecondaryTabScreen({ tab, onOpenConversation }: SecondaryTabScre
     if (tab !== 'People') return;
     let active = true;
     Promise.all([listWorkspaces(), listWorkspaceInvites()])
-      .then(([workspaceRows, inviteRows]) => {
+      .then(async ([workspaceRows, inviteRows]) => {
+        const memberRows = await Promise.all(workspaceRows.map(async (workspace) => [workspace.id, await listWorkspaceMembers(workspace.id)] as const));
         if (!active) return;
         setWorkspaces(workspaceRows);
         setInvites(inviteRows);
+        setMembersByWorkspace(Object.fromEntries(memberRows));
       })
       .catch((cause: unknown) => {
         if (active) setWorkspaceMessage(cause instanceof Error ? cause.message : 'Could not load workspaces.');
@@ -98,6 +101,7 @@ export function SecondaryTabScreen({ tab, onOpenConversation }: SecondaryTabScre
     try {
       const workspace = await createWorkspace(newWorkspaceName);
       setWorkspaces((current) => [workspace, ...current]);
+      setMembersByWorkspace((current) => ({ ...current, [workspace.id]: [] }));
       setNewWorkspaceName('');
       onOpenConversation(workspace.conversationId);
     } catch (cause) {
@@ -129,6 +133,11 @@ export function SecondaryTabScreen({ tab, onOpenConversation }: SecondaryTabScre
     try {
       const accepted = await acceptWorkspaceInvite(invite.id);
       setInvites((current) => current.filter((item) => item.id !== invite.id));
+      const [workspaceRows, inviteRows] = await Promise.all([listWorkspaces(), listWorkspaceInvites()]);
+      const memberRows = await Promise.all(workspaceRows.map(async (workspace) => [workspace.id, await listWorkspaceMembers(workspace.id)] as const));
+      setWorkspaces(workspaceRows);
+      setInvites(inviteRows);
+      setMembersByWorkspace(Object.fromEntries(memberRows));
       onOpenConversation(accepted.conversationId);
     } catch (cause) {
       setWorkspaceMessage(cause instanceof Error ? cause.message : 'Could not accept this invitation.');
@@ -177,6 +186,20 @@ export function SecondaryTabScreen({ tab, onOpenConversation }: SecondaryTabScre
                 </View>
                 <Text style={styles.chevron}>›</Text>
               </Pressable>
+              {(membersByWorkspace[workspace.id] ?? []).length > 0 && (
+                <View style={styles.memberList}>
+                  {(membersByWorkspace[workspace.id] ?? []).map((member) => (
+                    <View key={member.userId} style={styles.memberRow}>
+                      <Avatar person={{ initials: getInitials(member.displayName), color: colors.avatarSage, avatarUrl: member.avatarUrl, online: false }} size={30} />
+                      <View style={styles.personInfo}>
+                        <Text numberOfLines={1} style={styles.memberName}>{member.displayName}</Text>
+                        <Text numberOfLines={1} style={styles.personStatus}>{member.email}</Text>
+                      </View>
+                      {member.role === 'owner' && <Text style={styles.ownerLabel}>Owner</Text>}
+                    </View>
+                  ))}
+                </View>
+              )}
               <Pressable onPress={() => { setInvitingWorkspaceId(invitingWorkspaceId === workspace.id ? null : workspace.id); setWorkspaceMessage(''); }} style={styles.inviteLink}>
                 <Text style={styles.inviteLinkText}>{invitingWorkspaceId === workspace.id ? 'Close invite' : 'Invite by email'}</Text>
               </Pressable>
@@ -281,6 +304,10 @@ const styles = StyleSheet.create({
   disabled: { opacity: 0.5 },
   workspaceCard: { marginBottom: 10, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 16, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border },
   workspaceMain: { minHeight: 52, flexDirection: 'row', alignItems: 'center', gap: 10 },
+  memberList: { marginTop: 6, paddingTop: 7, borderTopWidth: 1, borderTopColor: colors.border },
+  memberRow: { minHeight: 42, flexDirection: 'row', alignItems: 'center', gap: 9 },
+  memberName: { color: colors.text, fontSize: 12, fontWeight: '600' },
+  ownerLabel: { color: colors.textSecondary, fontSize: 10 },
   workspaceIcon: { width: 40, height: 40, borderRadius: 14, backgroundColor: colors.primarySoft, alignItems: 'center', justifyContent: 'center' },
   workspaceIconText: { color: colors.primaryDark, fontWeight: '700', fontSize: 15 },
   inviteLink: { alignSelf: 'flex-start', paddingVertical: 7, paddingLeft: 50 },

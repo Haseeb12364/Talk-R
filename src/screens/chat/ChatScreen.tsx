@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { BottomTabBar, type TabName } from '@/components/BottomTabBar';
+import { BottomTabBar, type TabName } from '@/components/ui/BottomTabBar';
 import { ChatList } from '@/features/chat/components/ChatList';
 import { ChatScreenHeader } from '@/features/chat/components/ChatScreenHeader';
 import { ConversationSearch } from '@/features/chat/components/ConversationSearch';

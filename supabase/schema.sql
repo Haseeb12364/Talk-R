@@ -457,6 +457,9 @@ revoke all on public.profiles, public.conversations, public.conversation_members
 grant select on public.profiles, public.conversations, public.conversation_members,
   public.workspaces, public.workspace_members, public.workspace_invites to authenticated;
 grant select, insert on public.messages to authenticated;
+-- Workspace creation uses SECURITY DEFINER functions to insert conversation and
+-- membership rows, but the function owner still needs table privileges.
+grant insert on public.conversations, public.conversation_members, public.workspaces, public.workspace_members to postgres;
 
 revoke all on function public.search_users(text) from public, anon;
 revoke all on function public.open_direct_conversation(uuid) from public, anon;
